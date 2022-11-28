@@ -41,6 +41,7 @@ pipeline {
 			anyOf {
 				branch 'master'
 				branch 'feature/*'
+        branch 'release/*'
 			}
 		}
 		steps {
@@ -55,6 +56,7 @@ pipeline {
 			anyOf {
 				branch 'master'
 				branch 'feature/*'
+        branch 'release/*'
 			}
 		}
 		steps {
