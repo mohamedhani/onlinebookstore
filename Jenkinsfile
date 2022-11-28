@@ -23,7 +23,6 @@ pipeline {
 
           - name: kaniko
             image: gcr.io/kaniko-project/executor:debug
-            workingDir: /home/jenkins/agent
             command:
             - sleep
             args:
@@ -94,8 +93,9 @@ pipeline {
 
 			sh '''
 				#!/busybox/sh
-        ls -lR /home/jenkins/agent
-				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID} --context /home/jenkins/agent
+        pwd
+        ls -lR .
+				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID} 
 				'''
 			}
 		}
