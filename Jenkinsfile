@@ -14,6 +14,13 @@ pipeline {
             command:
             - cat
             tty: true
+            
+          - name: git
+            image:  bitnami/git
+            command:
+            - cat
+            tty: true
+
           - name: kaniko
             image: gcr.io/kaniko-project/executor:debug
             workingDir: /home/jenkins/agent
@@ -33,6 +40,7 @@ pipeline {
                 path: config.json
         '''
     }
+    bitnami/git
   }
   stages {
 
@@ -60,8 +68,17 @@ pipeline {
 			}
 		}
 		steps {
-		container('maven') {
-			sh 'mvn clean test'
+		container('git') {
+        script {
+          TAG_NO = sh (
+            script: "git tag -l  | head -1",
+            returnStdout: true ).trim()
+          if (env.BRANCH_NAME == 'master') {
+            IMAGE_ID = TAG_NO
+          }else {
+            IMAGE_ID = TAG_NO + "-SNAPSHOT"
+          }
+        }
 			}
 		}
     }
@@ -75,16 +92,7 @@ pipeline {
 		}
 		steps {
 		container(name :'kaniko', shell: '/busybox/sh' ) {
-      script {
-        TAG_NO = sh (
-          script: "git tag -l  | head -1",
-          returnStdout: true ).trim()
-        if (env.BRANCH_NAME == 'master') {
-          IMAGE_ID = TAG_NO
-        }else {
-          IMAGE_ID = TAG_NO + "-SNAPSHOT"
-        }
-      }
+
 			sh '''
 				#!/busybox/sh
 				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID}
