@@ -75,13 +75,15 @@ pipeline {
 		}
 		steps {
 		container(name :'kaniko', shell: '/busybox/sh' ) {
-      TAG_NO = sh (
-        script: "git tag -l  | head -1",
-        returnStdout: true ).trim()
-      if (env.BRANCH_NAME == 'master') {
-        IMAGE_ID = TAG_NO
-      }else {
-        IMAGE_ID = TAG_NO + "-SNAPSHOT"
+      script {
+        TAG_NO = sh (
+          script: "git tag -l  | head -1",
+          returnStdout: true ).trim()
+        if (env.BRANCH_NAME == 'master') {
+          IMAGE_ID = TAG_NO
+        }else {
+          IMAGE_ID = TAG_NO + "-SNAPSHOT"
+        }
       }
 			sh '''
 				#!/busybox/sh
