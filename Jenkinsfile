@@ -94,7 +94,6 @@ pipeline {
 
 			sh '''
 				#!/busybox/sh
-        ls -lR
 				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID}
 				'''
 			}
