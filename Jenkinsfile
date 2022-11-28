@@ -68,16 +68,22 @@ pipeline {
 		when {
 			anyOf {
 				branch 'master'
-				branch 'feature/*'
-				
+				branch 'release/*'		
 			}
 		}
 		steps {
 		container(name :'kaniko', shell: '/busybox/sh' ) {
+      TAG_NO = sh (
+        script: "git tag -l  | head -1",
+        returnStdout: true ).trim()
+      if (env.BRANCH_NAME == 'master') {
+        IMAGE_ID = TAG_NO
+      }else {
+        IMAGE_ID = TAG_NO + "-SNAPSHOT"
+      }
 			sh '''
 				#!/busybox/sh
-				/kaniko/executor  --destination mohamedhani/onlinebookstore:$BUILD_NUMBER
-
+				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID}
 				'''
 			}
 		}
