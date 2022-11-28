@@ -54,6 +54,7 @@ pipeline {
 		steps {
 		container('maven') {
 			sh 'mvn clean install'
+      sh "ls -lR"
 			}
 		}
 		}
