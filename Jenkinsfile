@@ -95,7 +95,7 @@ pipeline {
 				#!/busybox/sh
         
         ls -lR /home/jenkins/agent
-				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID}  --context /home/jenkins/agent
+				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID}  --context /home/jenkins/agent/workspace/ookstore-pipline_release_testing/
 				'''
 			}
 		}
