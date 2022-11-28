@@ -94,7 +94,7 @@ pipeline {
 
 			sh '''
 				#!/busybox/sh
-        ls -lR /workspace
+        ls -lR /home/jenkins/agent
 				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID} --context /home/jenkins/agent
 				'''
 			}
