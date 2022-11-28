@@ -40,7 +40,6 @@ pipeline {
                 path: config.json
         '''
     }
-    bitnami/git
   }
   stages {
 
