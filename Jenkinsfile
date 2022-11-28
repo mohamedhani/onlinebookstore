@@ -54,7 +54,6 @@ pipeline {
 		steps {
 		container('maven') {
 			sh 'mvn clean install'
-      sh "ls -lR"
 			}
 		}
 		}
@@ -95,6 +94,7 @@ pipeline {
 
 			sh '''
 				#!/busybox/sh
+        ls -lR
 				/kaniko/executor  --destination mohamedhani/onlinebookstore:${IMAGE_ID}
 				'''
 			}
